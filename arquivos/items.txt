@@ -1,0 +1,5 @@
+ferro
+navalha
+carvao
+prego
+madeira
