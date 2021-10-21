@@ -26,7 +26,7 @@ int main (){
     void consultas(void);
    //============================== Inicialização =====================================
     bemVindo();
-    Sleep(1000);
+    Sleep(5000);
     system("cls");
     login();
 

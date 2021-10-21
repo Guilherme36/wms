@@ -11,15 +11,17 @@ int escolha;
 int sair;
 char qtd[100][30];
 char items[100][200];
+char local[100][4];
 FILE *abrindoItems;
 FILE *salvandoItems;
 FILE *abrindoQtd;
 FILE *salvandoQtd;
+FILE *abrindoLocal;
 void abrirItem(void);
 void mostrarItem(int menu);
 void abrirQtd(void);
 void salvarQtd(void);
-//void abrirLocal (void);
+void abrirLocal (void);
 void voltarMenu (int voltar);
 //============================== Função Principal =====================================
 int main (){
@@ -132,7 +134,6 @@ void login(void) {
         }
     }while (aprovado != 1);
     printf("\n>>>>>>>>>>>>>>>>>>>>>>>>>> ACESSO PERMITIDO <<<<<<<<<<<<<<<<<<<<<<<<\n");
-    Sleep(1000);
 }
 
 void entrada(void) {
@@ -174,12 +175,20 @@ void consultas(void) {
         mostrarItem(1);
         //============================== Informações sobre o item escolhido =====================================
         system("cls");
-        printf(" %s ", &items[escolha - 1][200]);
+        printf("%s \n", &items[escolha - 1][200]);
         abrirQtd();
-        printf(" %s ", &qtd[escolha - 1][30]);
-        //abrirLocal();
-
-
+        printf("Quantidade: %d pecas\n", qtd[escolha - 1][30]);
+        abrirLocal();
+        printf("Local: %s \n", &local[escolha - 1][4]);
+        //Sleep(5000);
+        printf("\n\n----------------------------------------------");
+        printf("\nPressione qualquer tecla para continuar");
+        printf("\n----------------------------------------------");
+        getchar();
+        system("cls");
+        //============================== Adicionar mais items? =====================================
+        voltarMenu(1);
+        system("cls");
     }while(sair != 2);
 }
 
@@ -217,9 +226,17 @@ void salvarQtd(void) {
     fclose(salvandoQtd);
 }
 
-/*void abrirLocal(void) {
+void abrirLocal(void) {
+    int i = 0;
+    abrindoLocal = fopen("local.txt", "r");
+        while(!feof(abrindoLocal)){
+            fscanf(abrindoLocal, "%s", &local[i][4]);
+            //printf("\n%s", &local[i][4]);
+            i++;
+        }
+        fclose(abrindoLocal);
+}
 
-}*/
 //============================== Funções Reutilizaveis =====================================
 
 void mostrarItem(int menu) {
@@ -266,6 +283,7 @@ void voltarMenu(int voltar) {
                 sair = 2;
             }
             else{
+                sair = 0;
                 printf("\n-------------------------------------------------------------------");
                 printf("\nErro : O caractere digitado nao corresponde as opcoes informadas\n");
                 printf("-------------------------------------------------------------------\n");
